@@ -1,0 +1,92 @@
+ \ The trigger
+
+To run:
+Start up.
+\Initialize the compiler.
+Compile the project.
+\Handle events.
+Finalize the compiler.
+\Write a new line on StdOut.
+\Write "Compilation finished." then the CRLF string to Stdout.
+Shut down.
+
+To compile the project:
+Put 1252 into a number called CodePage.
+Call "kernel32.dll" "SetConsoleOutputCP" with
+  the codepage
+  returning a number called error status code.
+If the error status code is 0 [null],
+  Cluck;
+  Write "Error setting Console CodePage to STDOUT." then the CRLF string to StdOut;
+  Write "If you are using the NppExec console, ignore the above message." then the CRLF string to StdOut.
+Get a string called project directory from the command line arguments.
+If the project directory is blank,
+  Cluck;
+  Write "|-----------------------------------------------------------------------------------------------------------------------|" then the CRLF string to StdOut;
+  Write "| Warning. To use this compiler, you must invoke it from the command line.                                              |" then the CRLF string to StdOut;
+  Write "| You must invoke the compiler in the Command Prompt (cmd.exe) using the syntax below:                                  |" then the CRLF string to StdOut;
+  Write "|                                                                                                                       |" then the CRLF string to StdOut;
+  Write "|  C:\compiler_path.exe\ C:\some random folder\current_project_folder\                                                  |" then the CRLF string to StdOut;
+  Write "|                                                                                                                       |" then the CRLF string to StdOut;
+  Write "|-----------------------------------------------------------------------------------------------------------------------|" then the CRLF string to StdOut;
+  Exit.
+If the project directory's last byte pointer's target is not the backslash byte,
+  Append the backslash byte to the project directory.
+If the project directory is not in the file system,
+  Cluck;
+  Write "Error. The directory " then the project directory then " could not be found in the filesystem" then the CRLF string to StdOut;
+  Exit.
+Write "Compiling project at '" then the project directory then "' ..." then the CRLF string to StdOut. \ Compilation starts here
+Write the CRLF string to StdOut.
+Compile the project directory.
+If the compiler's abort flag is set, 
+  \Abort with the compiler's abort message;
+  \Write the compiler's abort message to StdOut;
+  \Show the status;
+  Exit.
+Write "Compilation time: " then the compiler's timer's string then " ms."  to StdOut. 
+
+To get a string from the command line arguments:
+Call "kernel32.dll" "GetCommandLineA" 
+    Returning a pchar.
+Convert the pchar to a string called arguments.
+Slap a substring on the arguments.
+Loop.
+  If the substring is blank,
+    Clear the string;
+    Exit.
+If the substring's first byte pointer's target is not the space byte,
+  Add 1 to the substring's first byte pointer;
+  Repeat.
+Put the substring into the string.
+Remove any leading noise from the string.
+Remove any trailing noise from the string.
+  \Repeat.
+
+To use the next line of StdOut;
+To go to the next line of StdOut;
+To jump to the next line of StdOut;
+To write on the next line of Standard Output;
+To write a new line on StdOut;
+To write on the next line of StdOut:
+  Write the CRLF string to StdOut.
+
+
+
+To show status a string:
+\Put the string into the compiler's abort message.
+\Show the status.
+Write the string then the CRLF string to StdOut.
+
+
+To show the status: 
+  \If the compiler's  abort path is blank,
+    \Write the compiler's abort message then the CRLF string to StdOut;
+    \Exit.    
+  If the compiler's  abort path is not blank,
+    Write the compiler's abort message then the CRLF string then 
+    "File '" then the compiler's abort path then "'" then the CRLF string then 
+    "Line number: " then the compiler's abort row#  then the CRLF string 
+    to Stdout;
+    Exit.
+
